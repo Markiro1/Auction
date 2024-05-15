@@ -35,7 +35,7 @@ There are 2 ways:
     - If you are going to host on a different IP address, then you need to enter in the file in
   ```app:
        enviroment:
-         "IP_ADDRESS": ""```
+         "IP_ADDRESS": ""
 
 ## Access & Permissions
 User with role __"USER"__ can do:
