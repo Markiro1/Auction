@@ -32,7 +32,10 @@ There are 2 ways:
 - If you have docker you can just take `"docker-compose.yml"` file
     - Enter the command `"docker-compose up -d"` *(navigate in advance to the path where the file is located)* into the terminal. And wait for it download.
     - Open the browser and go to `"http://localhost:8090/"`.
-    - 
+    - If you are going to host on a different IP address, then you need to enter in the file in
+  ```app:
+       enviroment:
+         "IP_ADDRESS": ""```
 
 ## Access & Permissions
 User with role __"USER"__ can do:
