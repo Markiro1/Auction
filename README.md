@@ -4,7 +4,7 @@ This is the "Auction" project. In this project, there are 2 types of users: admi
 
 To allow a user to list their product on the auction, they write information about themselves and the product they want to sell in the "Contact Us" tab.
 
-Next, the situation that does not exist in the project:
+Use case:
 
 After the user sends a request through "Contact Us", the administration responds to them via email and further clarifies and agrees on all details.
 After all details are agreed upon, the administrator can add the product to their menu, specifying: the email of the one who is listing, price, quantity, product status, and description (optional).
@@ -31,6 +31,7 @@ There are 2 ways:
 - If you have docker you can just take `"docker-compose.yml"` file
     - Enter the command `"docker-compose up -d"` *(navigate in advance to the path where the file is located)* into the terminal. And wait for it download.
     - Open the browser and go to `"http://localhost:8090/"`.
+    - 
 
 ## Access & Permissions
 User with role __"USER"__ can do:
