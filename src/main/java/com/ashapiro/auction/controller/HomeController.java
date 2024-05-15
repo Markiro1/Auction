@@ -11,14 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/logo")
 @RequiredArgsConstructor
 public class HomeController {
 
     private final HomeService homeService;
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping("/")
     public String home() {
         return "home/home";
     }
@@ -57,7 +56,7 @@ public class HomeController {
     @PutMapping("/user/profile/save/{userId}")
     public String saveProfile(@PathVariable Long userId, UpdateUserProfileDto updateUserProfileDto) {
         homeService.updateProfile(userId, updateUserProfileDto);
-        return "redirect:/logo/user/profile/" + userId;
+        return "redirect:/user/profile/" + userId;
     }
 
 }

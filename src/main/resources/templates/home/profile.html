@@ -12,7 +12,7 @@
 <header>
     <h2 class="logo">Logo</h2>
     <nav class="navigation">
-        <button class="btnLogin-popup" onclick="window.location.href='/logo/user'">Go back</button>
+        <button class="btnLogin-popup" onclick="window.location.href='/user'">Go back</button>
     </nav>
 </header>
 
@@ -57,7 +57,7 @@
 
 <div class="modal-overlay" id="modal-overlay"></div>
 <div class="modal" id="edit-modal">
-    <form th:action="@{/logo/user/profile/save/{userId}(userId=${userId})}" th:method="put" th:object="${updateProfile}">
+    <form th:action="@{/user/profile/save/{userId}(userId=${userId})}" th:method="put" th:object="${updateProfile}">
         <h2>Edit Profile Information</h2>
         <label class="modal-label">
             Phone:

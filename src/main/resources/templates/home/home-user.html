@@ -15,7 +15,7 @@
         <h2 class="logo">Logo</h2>
         <nav class="navigation">
             <a id="aboutLink" href="#">About</a>
-            <a id="contactLink" href="/logo/contact-us">Contact Us</a>
+            <a id="contactLink" href="/contact-us">Contact Us</a>
             <a id="myProductsLink" href="#" onclick="openMyProducts()">My products</a>
             <a id="auctionsLink" href="/auction/user/all/active">Auctions</a>
             <a id="myWinsLink" href="#" onclick="openMyWins()">My wins</a>
@@ -68,7 +68,7 @@
         function openProfile() {
             event.preventDefault();
             const userId = getUserId();
-            window.location.href = "/logo/user/profile/" + userId;
+            window.location.href = "/user/profile/" + userId;
         }
 
     </script>

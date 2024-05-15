@@ -41,7 +41,7 @@ public class AuctionController {
     public String addAuction(AuctionRequestDto auctionDto, RedirectAttributes redirectAttributes) {
         String message = auctionService.add(auctionDto);
         redirectAttributes.addFlashAttribute("message", message);
-        return "redirect:/logo/admin";
+        return "redirect:/admin";
     }
 
     @GetMapping("/admin/all")

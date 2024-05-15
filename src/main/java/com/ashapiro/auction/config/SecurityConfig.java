@@ -35,14 +35,14 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
                                 .requestMatchers(
-                                        "/logo/user",
+                                        "/user",
                                         "/auction/user/**",
                                         "/bids/user/**",
                                         "/payment/user/**",
                                         "products/user/**"
                                 ).hasRole("USER")
                                 .requestMatchers(
-                                        "/logo/admin",
+                                        "/admin",
                                         "/auction/admin/**",
                                         "/bids/admin/**",
                                         "/products/admin/**",

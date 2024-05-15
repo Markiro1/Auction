@@ -15,11 +15,13 @@ public class AuctionScheduler {
     private final AuctionService auctionService;
     private final WonAuctionService wonAuctionService;
 
+/*
     @Scheduled(fixedRate = 60000)
     public void checkAndUpdateAuctionStatus() {
         log.info("Check and update auction status.");
         auctionService.updateExpiredAuctions();
     }
+*/
 
     @Scheduled(fixedRate = 60000)
     public void checkAndReopenExpiredWonAuctions() {

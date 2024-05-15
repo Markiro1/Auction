@@ -36,7 +36,7 @@ public class AuthController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         authService.logout(response, request);
-        return "redirect:/logo";
+        return "redirect:/";
     }
 
     @PostMapping("/login")
@@ -48,9 +48,9 @@ public class AuthController {
             List<String> roles = authService.getRoles(token);
             addCookie("token", token, httpServletResponse);
             if (roles.contains("ROLE_USER")) {
-                return "redirect:/logo/user";
+                return "redirect:/user";
             } else {
-                return "redirect:/logo/admin";
+                return "redirect:/admin";
             }
         } else {
             return "redirect:/auth/login";

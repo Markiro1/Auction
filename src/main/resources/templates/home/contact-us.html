@@ -42,7 +42,7 @@
 <div class="wrapper">
     <div class="form-box login">
         <h2>Contact us</h2>
-        <form th:action="@{/logo/contact-us/send}" method="post" id="loginForm">
+        <form th:action="@{/contact-us/send}" method="post" id="loginForm">
             <div class="input-box">
                 <input type="text" th:field="${contactForm.fullName}" required>
                 <label>First name & last name *</label>
@@ -63,7 +63,7 @@
             <div class="login-register">
                 <p>
                     <br>
-                    <a id="backLink" href="/logo/user" class="home-link">Go back</a>
+                    <a id="backLink" href="/user" class="home-link">Go back</a>
                 </p>
             </div>
         </form>
@@ -75,9 +75,9 @@
     const backLink = document.getElementById('backLink');
 
     if (authToken === null || authToken === undefined) {
-        backLink.href = '/logo';
+        backLink.href = '/';
     } else {
-        backLink.href = '/logo/user'
+        backLink.href = '/user'
     }
 
     function getCookie(name) {
