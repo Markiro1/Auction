@@ -20,6 +20,7 @@ On the day the auction ends, the last person who placed a bid becomes the winner
 - Thymeleaf
 - WebSocket
 - Spring Security
+- Javascript
   
 ## How to run application
 There are 2 ways:
