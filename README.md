@@ -7,7 +7,7 @@ To allow a user to list their product on the auction, they write information abo
 __Use case__:
 
 After the user sends a request through "Contact Us", the administration responds to them via email and further clarifies and agrees on all details.
-After all details are agreed upon, the administrator can add the product to their menu, adding: the email of the one who is listing, price, quantity, product status, and description (optional).
+After all details are agreed upon, the administrator can add the product to their menu, enter: the email of the one who is listing, price, quantity, product status, and description (optional).
 
 After the auction creation time is determined, the administrator creates the auction and sets the auction duration (minimum 7 days).
 
