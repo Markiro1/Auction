@@ -9,7 +9,7 @@ __Use case__:
 After the user sends a request through "Contact Us", the administration responds to them via email and further clarifies and agrees on all details.
 After all details are agreed upon, the administrator can add the product to their menu, enter: the email of the one who is listing, price, quantity, product status, and description (optional).
 
-After the auction creation time is determined, the administrator creates the auction and sets the auction duration (minimum 7 days).
+Then the administrator creates an auction. The administrator must enter: start date, end date, user, product. After the auction has been created, it starts on the specified start date.
 
 On the day the auction ends, the last person who placed a bid becomes the winner and the auction is put on pause. The user who wins has 3 days to pay for the auction. If, after the time limit, the winner does not pay for the auction, it is re-auctioned for a week ahead.
 ## Technologies
