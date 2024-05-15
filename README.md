@@ -3,12 +3,11 @@
 This is the "Auction" project. In this project, there are 2 types of users: admin and user.
 
 To allow a user to list their product on the auction, they write information about themselves and the product they want to sell in the "Contact Us" tab.
-____
+
 __Use case__:
 
 After the user sends a request through "Contact Us", the administration responds to them via email and further clarifies and agrees on all details.
-After all details are agreed upon, the administrator can add the product to their menu, specifying: the email of the one who is listing, price, quantity, product status, and description (optional).
-____
+After all details are agreed upon, the administrator can add the product to their menu, adding: the email of the one who is listing, price, quantity, product status, and description (optional).
 
 After the auction creation time is determined, the administrator creates the auction and sets the auction duration (minimum 7 days).
 
