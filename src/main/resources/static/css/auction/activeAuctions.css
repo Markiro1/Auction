@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('../background.jpg') no-repeat;
+    margin: 0;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background: orangered;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+
+.logo {
+    font-size: 2em;
+    color: aliceblue;
+    user-select: none;
+}
+
+.content {
+    min-height: 1vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 2%;
+}
+
+.pagination ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.pagination ul li {
+    margin: 0 5px;
+}
+
+.pagination ul li a {
+    text-decoration: none;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #333;
+}
+
+.pagination ul li a.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+
+.product-table {
+    border-spacing: 350px;
+}
+
+.product-table td {
+    font-size: 2em;
+}
+
+.navigation a {
+    position: relative;
+    font-size: 1.1em;
+    color: aliceblue;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.navigation a::after {
+    content: '';
+    position: absolute;
+    left: 0px;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: aliceblue;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+.navigation a:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.navigation .btnLogin-popup {
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid aliceblue;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: aliceblue;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+.navigation .btnLogin-popup:hover {
+    background: aliceblue;
+    color: black;
+}
+
+.navigation .btnLogout-popup {
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid aliceblue;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: aliceblue;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+.navigation .btnLogout-popup:hover {
+    background: aliceblue;
+    color: black;
+}
+
+.logo {
+    font-size: 2em;
+    color: aliceblue;
+    user-select: none;
+}

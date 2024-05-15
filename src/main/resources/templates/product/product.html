@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <link rel="stylesheet" href="/css/product/product.css">
+</head>
+<body>
+
+<header>
+    <h2 class="logo">Logo</h2>
+    <nav class="navigation">
+        <button class="btnLogin-popup" onclick="window.location.href='/products/user/' + getUserId()">Go back</button>
+    </nav>
+</header>
+
+<div class="content">
+    <div class="container">
+        <p><strong>Name:</strong> <span th:text="${product.name}"></span></p>
+        <p><strong>Quantity:</strong> <span th:text="${product.quantity}"></span></p>
+        <p><strong>Asking price:</strong> <span th:text="${product.askingPrice}"></span></p>
+        <p><strong>Status:</strong> <span th:text="${product.status()}"></span></p>
+        <p class="description-label"><strong>Description:</strong></p>
+        <div class="description-box">
+            <p th:text="${product.description}"></p>
+        </div>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    const authToken = getCookie('token');
+    const tokenData = parseJwt(authToken);
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function parseJwt(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        } catch (error) {
+            console.error("Error parsing JWT", error);
+            return null;
+        }
+    }
+
+    function getUserId() {
+        return tokenData.userId;
+    }
+</script>
+
+</body>
+</html>

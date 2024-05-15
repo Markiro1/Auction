@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+    <link rel="Login & Registration" href="/css/auth/login.css">
+    <link rel="stylesheet" href="/css/auth/login.css">
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="form-box login">
+        <h2>Login</h2>
+        <form th:action="@{/auth/login}" method="post" id="loginForm">
+            <div class="input-box">
+                <span class="icon"><ion-icon name="key"></ion-icon></span>
+                <input type="text" th:field="${user.email}" required>
+                <label>Email</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="key"></ion-icon></span>
+                <input type="password" th:field="${user.password}" required>
+                <label>Password</label>
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <div class="login-register">
+                <p>Do not have an account?
+                    <a href="/auth/register" class="register-link">Register</a>
+                    <br>
+                    <br>
+                    <a href="/logo" class="home-link">Go back</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    const status = [[${status}]];
+</script>
+
+</body>
+</html>

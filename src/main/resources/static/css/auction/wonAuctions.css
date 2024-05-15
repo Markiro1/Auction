@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: url('../background.jpg') no-repeat center/cover;
+    margin: 0;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background: orangered;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+
+.logo {
+    font-size: 2em;
+    color: aliceblue;
+    user-select: none;
+}
+
+.content {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.list {
+    text-align: left;
+    list-style-position: outside;
+    padding-left: 20px;
+}
+
+.list li {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.list li:hover {
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.navigation a {
+    font-size: 1.1em;
+    color: aliceblue;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+    position: relative;
+}
+
+.navigation a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: aliceblue;
+    border-radius: 5px;
+    transform-origin: right;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+.navigation a:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.navigation .btnLogin-popup,
+.navigation .btnLogout-popup {
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid aliceblue;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: aliceblue;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+.navigation .btnLogin-popup:hover,
+.navigation .btnLogout-popup:hover {
+    background: aliceblue;
+    color: black;
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <link rel="Login & Registration" href="/css/home.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+
+<body>
+
+    <header>
+        <h2 class="logo">Logo</h2>
+        <nav class="navigation">
+            <a id="aboutLink" href="#">About</a>
+            <a id="contactLink" href="/logo/contact-us">Contact Us</a>
+            <a id="myProductsLink" href="#" onclick="openMyProducts()">My products</a>
+            <a id="auctionsLink" href="/auction/user/all/active">Auctions</a>
+            <a id="myWinsLink" href="#" onclick="openMyWins()">My wins</a>
+            <a id="profileLink" href="#" onclick="openProfile()">Profile</a>
+            <button class="btnLogin-popup" onclick="window.location.href='/auth/logout'">Logout</button>
+        </nav>
+    </header>
+
+    <script>
+        const authToken = getCookie('token');
+        const tokenData = parseJwt(authToken);
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+
+        }
+
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+
+                return JSON.parse(jsonPayload);
+            } catch (error) {
+                console.error("Error parsing JWT", error);
+                return null;
+            }
+        }
+
+        function getUserId() {
+            return tokenData.userId;
+        }
+
+        function openMyProducts() {
+            event.preventDefault();
+            const userId = getUserId();
+            window.location.href = "/products/user/" + userId;
+        }
+
+        function openMyWins() {
+            event.preventDefault();
+            const userId = getUserId();
+            window.location.href = "/auction/user/won-auctions/" + userId;
+        }
+
+        function openProfile() {
+            event.preventDefault();
+            const userId = getUserId();
+            window.location.href = "/logo/user/profile/" + userId;
+        }
+
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

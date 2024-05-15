@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <link rel="Products" href="/css/auction/activeAuctions.css">
+    <link rel="stylesheet" href="/css/auction/activeAuctions.css">
+    <style>
+
+    </style>
+</head>
+
+<header>
+    <h2 class="logo">Logo</h2>
+    <nav class="navigation">
+        <button class="btnLogin-popup" onclick="window.location.href='/logo/user'">Go back</button>
+    </nav>
+</header>
+
+<body>
+<div class="content">
+    <table class="product-table">
+        <tr th:each="i : ${#numbers.sequence(0, activeAuctions.content.size() - 1, 2)}">
+            <td>
+                <a th:href="@{'/auction/user/' + ${activeAuctions.content[i].id}}">
+                    <span th:text="'Auction#' + ${activeAuctions.content[i].id}"></span>
+                </a>
+            </td>
+            <td th:if="${i + 1 &lt; activeAuctions.content.size()}">
+                <a th:href="@{'/auction/user/' + ${activeAuctions.content[i + 1].id}}">
+                    <span th:text="'Auction#' + ${activeAuctions.content[i + 1].id}"></span>
+                </a>
+            </td>
+        </tr>
+    </table>
+    <div th:if="${activeAuctions.totalPages > 1} "class="pagination">
+        <ul>
+            <li th:each="pageNumber : ${#numbers.sequence(0, activeAuctions.totalPages - 1)}">
+                <a th:href="@{'/auction/user/all/active?size=4&page=' + ${pageNumber}}"
+                   th:class="${pageNumber == activeAuctions.number ? 'active' : ''}">
+                    [[${pageNumber + 1}]]
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

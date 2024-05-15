@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <link rel="stylesheet" href="/css/product/allProducts.css">
+    <style>
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-content">
+        <h2 class="logo">Logo</h2>
+        <button class="btnLogin-popup" onclick="window.location.href='/logo/admin'">Go back</button>
+    </div>
+</header>
+
+<table id="dataTable" border="1">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>owner email</th>
+        <th>owner id</th>
+        <th>product id</th>
+        <th>start time</th>
+        <th>end time</th>
+        <th>status</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tr th:each="auction : ${auctions}">
+        <td th:text="${auction.id}"></td>
+        <td>
+            <a th:href="@{/auction/admin/info/{auctionId}(auctionId = ${auction.id})}" th:text="${auction.name}"></a>
+        </td>
+        <td th:text="${auction.ownerEmail}"></td>
+        <td th:text="${auction.ownerId}"></td>
+        <td th:text="${auction.productId}"></td>
+        <td th:text="${auction.startTime}"></td>
+        <td th:text="${auction.endTime}"></td>
+        <td>
+            <form th:action="@{'/auction/admin/status/' + ${auction.id}}" th:method="patch">
+                <select name="status">
+                    <option th:each="status : ${statuses}"
+                            th:value="${status.name()}"
+                            th:text="${status.name()}"
+                            th:selected="${status.name() == auction.status}">
+                    </option>
+                </select>
+                <button type="submit">Update</button>
+            </form>
+        </td>
+    </tr>
+</table>
+<script th:inline="javascript">
+    const message = [[${message}]];
+    if (message) {
+        alert(message);
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

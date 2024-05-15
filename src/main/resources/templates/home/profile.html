@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Editable Profile</title>
+    <link rel="stylesheet" href="/css/home/profile.css">
+</head>
+
+<body>
+<header>
+    <h2 class="logo">Logo</h2>
+    <nav class="navigation">
+        <button class="btnLogin-popup" onclick="window.location.href='/logo/user'">Go back</button>
+    </nav>
+</header>
+
+<div class="profile">
+    <h2 class="profile-header">Profile</h2>
+    <div class="profile-data">
+        <h1>
+            Full name:
+            <input class="input-box" th:value="${profile.firstName() + ' ' + profile.lastName()}">
+        </h1>
+        <h1>
+            Email:
+            <input class="input-box" th:value="${profile.email()}">
+        </h1>
+        <h1>
+            Phone number:
+            <input class="input-box" type="text" id="phone-number" th:field="${profile.phoneNumber}"
+                   th:value="${profile.phoneNumber}" disabled>
+        </h1>
+        <h1>
+            City:
+            <input class="input-box" type="text" id="city" th:field="${profile.city}" th:value="${profile.city}"
+                   disabled>
+        </h1>
+        <h1>
+            State:
+            <input class="input-box" type="text" id="state" th:field="${profile.state}" th:value="${profile.state}"
+                   disabled>
+        </h1>
+        <h1>
+            Address:
+            <input class="input-box" type="text" id="address" th:field="${profile.address}"
+                   th:value="${profile.address}" disabled>
+        </h1>
+        <h1>
+            Zip:
+            <input class="input-box" type="text" id="zip" th:field="${profile.zip}" th:value="${profile.zip}" disabled>
+        </h1>
+        <button class="edit-button" onclick="openModal()">Edit</button>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-overlay"></div>
+<div class="modal" id="edit-modal">
+    <form th:action="@{/logo/user/profile/save/{userId}(userId=${userId})}" th:method="put" th:object="${updateProfile}">
+        <h2>Edit Profile Information</h2>
+        <label class="modal-label">
+            Phone:
+            <input type="text" th:field="${profile.phoneNumber}">
+        </label>
+        <br>
+        <label class="modal-label">
+            City:
+            <input type="text" th:field="${profile.city}">
+        </label>
+        <br>
+        <label class="modal-label">
+            State:
+            <input type="text" th:field="${profile.state}">
+        </label>
+        <br>
+        <label class="modal-label">
+            Address:
+            <input type="text" th:field="${profile.address}">
+        </label>
+        <br>
+        <label class="modal-label">
+            Zip:
+            <input type="text" th:field="${profile.zip}">
+        </label>
+        <br>
+        <button type="submit">Save</button>
+        <button type="button" onclick="closeModal()">Cancel</button>
+    </form>
+</div>
+<script src="/js/profile.js"></script>
+</body>
+</html>

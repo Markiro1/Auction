@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('../background.jpg') no-repeat;
+    margin: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background: orangered;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+}
+
+.logo {
+    font-size: 2em;
+    color: aliceblue;
+    user-select: none;
+}
+
+.form-box h2 {
+    font-size: 2em;
+    color: black;
+    text-align: center;
+    margin-right: 2%;
+}
+
+.wrapper {
+    position: relative;
+    width: 500px;
+    height: 600px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 5%;
+}
+
+.wrapper .form-box {
+    width: 140%;
+    padding: 60px;
+}
+
+.wrapper .form-box.login {
+    transition: transform .18s ease;
+    transform: translateX(0);
+}
+
+.wrapper.active .form-box.login {
+    transition: none;
+    transform: translateX(-400px);
+}
+
+.form-box h2 {
+    font-size: 2em;
+    color: black;
+    text-align: center;
+}
+
+.home-link {
+    display: block;
+    width: fit-content;
+    padding: 10px 20px;
+    margin: 0 auto;
+    background-color: transparent;
+    color: black;
+    text-decoration: none;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, .5);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
+    margin-left: 39%;
+}
+
+.home-link:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: black;
+}

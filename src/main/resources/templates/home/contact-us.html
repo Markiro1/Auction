@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <link rel="Login & Registration" href="/css/contactus/contact-us.css">
+    <link rel="stylesheet" href="/css/contactus/contact-us.css">
+</head>
+
+<body>
+
+<header>
+    <h2 class="logo">Logo</h2>
+</header>
+
+<div class="text">
+    <p>Easily sell any product!</p>
+    <p>Auction and earn from your
+        <br>discarded goods</p>
+
+    <div class="numbered-list">
+        <p><strong>1. </strong>Selection & Personal advice</p>
+        <span class="sub-paragraph">Make a selection of the goods you would like to sell.<br>
+            We will give you clear and personal advice, an estimate<br>
+            of the total revenue and a clear plan and offer.<br>
+            Our sector specialist will always look along with you.</span>
+        <p><strong>2. </strong>Preparation and Auctioning</p>
+        <span class="sub-paragraph">Our employees thoroughly describe and photograph each item.<br>
+            We set up a publicity campaign and organise a viewing day.<br>
+            We answer questions from potential buyers and sort things out for<br>
+            them if necessary. Our auctioneers make every auction a success.</span>
+        <p><strong>3. </strong>Pick up & Payment</p>
+        <span class="sub-paragraph">Your auctioned goods are collected by the highest bidder.<br>
+            We arrange this for both buyer and seller without any worries.<br>
+            Of course, we ensure that the payment is received and quickly<br>
+            appears on your account.</span>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="form-box login">
+        <h2>Contact us</h2>
+        <form th:action="@{/logo/contact-us/send}" method="post" id="loginForm">
+            <div class="input-box">
+                <input type="text" th:field="${contactForm.fullName}" required>
+                <label>First name & last name *</label>
+            </div>
+            <div class="input-box">
+                <input type="text" th:field="${contactForm.email}" required>
+                <label>Email *</label>
+            </div>
+            <div class="input-box">
+                <input type="text" th:field="${contactForm.phoneNumber}" required>
+                <label>Phone number *</label>
+            </div>
+            <div class="input-box">
+                <input type="text" th:field="${contactForm.descriptionOfGoods}" required>
+                <label>Description of goods *</label>
+            </div>
+            <button type="submit" class="btn">Send</button>
+            <div class="login-register">
+                <p>
+                    <br>
+                    <a id="backLink" href="/logo/user" class="home-link">Go back</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    const authToken = getCookie('token');
+    const tokenData = parseJwt(authToken);
+    const backLink = document.getElementById('backLink');
+
+    if (authToken === null || authToken === undefined) {
+        backLink.href = '/logo';
+    } else {
+        backLink.href = '/logo/user'
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function parseJwt(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        } catch (error) {
+            console.error("Error parsing JWT", error);
+            return null;
+        }
+    }
+</script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

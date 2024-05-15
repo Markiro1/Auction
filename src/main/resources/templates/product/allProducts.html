@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <link rel="Products" href="/css/product/allProducts.css">
+    <link rel="stylesheet" href="/css/product/allProducts.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-content">
+        <h2 class="logo">Logo</h2>
+        <button class="btnLogin-popup" onclick="window.location.href='/logo/admin'">Go back</button>
+    </div>
+</header>
+
+<table id="dataTable" border="1">
+    <thead>
+    <tr>
+        <th>Product id</th>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Asking Price</th>
+        <th>Status</th>
+        <th>Description</th>
+        <th>Owner Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.id}"></td>
+        <td>
+            <a th:href="@{/products/admin/product/update/{productId}(productId=${product.id})}" th:text="${product.name}"></a>
+        </td>
+        <td th:text="${product.quantity}"></td>
+        <td th:text="${product.askingPrice}"></td>
+        <td>
+            <form th:action="@{'/products/admin/product/update/status/' + ${product.id}}" th:method="patch">
+                <select name="status">
+                    <option th:each="status : ${statuses}"
+                            th:value="${status.name()}"
+                            th:text="${status.name()}"
+                            th:selected="${status.name() == product.status}">
+                    </option>
+                </select>
+                <button type="submit">Update</button>
+            </form>
+        </td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${product.email}"></td>
+    </tr>
+</table>
+<script th:inline="javascript">
+    const message = [[${message}]];
+    if (message) {
+        alert(message);
+    }
+</script>
+</body>
+</html>

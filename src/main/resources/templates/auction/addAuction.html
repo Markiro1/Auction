@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <link rel="Create product" href="/css/auction/addAuction.css">
+    <link rel="stylesheet" href="/css/auction/addAuction.css">
+</head>
+
+<body>
+
+<header>
+    <h2 class="logo">Logo</h2>
+    <nav class="navigation">
+        <button class="btnLogin-popup" onclick="window.location.href='/logo/admin'">Go back</button>
+    </nav>
+</header>
+
+<div class="wrapper">
+    <div class="form-box">
+        <h2>Create auction</h2>
+        <form th:action="@{/auction/admin/add}" method="post" id="loginForm">
+            <input type="hidden" id="timezone" th:field="${auctionForm.timezone}" name="timezone"/>
+            <table>
+                <tr>
+                    <td>
+                        <div class="select-box">
+                            <label>Email</label>
+                            <select th:field="${auctionForm.ownerEmail}" id="emailDropdown" required>
+                                <option value=""> Select User Email</option>
+                                <option th:each="entry : ${productNamesMap}" th:value="${entry.key}" th:text="${entry.key}" selected="false"></option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="select-box">
+                            <label>Product</label>
+                            <select th:field="${auctionForm.productId}" id="productDropdown" required>
+                                <option value="" disabled selected> Select Product Name</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="date-box">
+                            <input type="datetime-local" id="startTime" name="startTime" required>
+                            <label for="startTime">Start Time:</label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="date-box">
+                            <input type="datetime-local" id="endTime" name="endTime" required>
+                            <label for="endTime">End Time:</label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <button type="submit" class="btn">Create</button>
+            </table>
+        </form>
+    </div>
+</div>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script th:inline="javascript">
+    const message = [[${message}]];
+    if (message) {
+        alert(message);
+    }
+</script>
+<script th:inline="javascript">
+    const productNamesMap = [[${productNamesMap}]];
+
+    const offset = new Date().getTimezoneOffset() / (-60);
+    const timezone = document.getElementById('timezone');
+    timezone.value = offset;
+
+    function updateProductDropdown() {
+        const emailDropdown = document.getElementById('emailDropdown');
+        const productDropdown = document.getElementById('productDropdown');
+        const selectedEmail = emailDropdown.value;
+
+
+        productDropdown.innerHTML = '<option value="" disabled selected>Select Product</option>';
+
+        if (productNamesMap[selectedEmail]) {
+            productNamesMap[selectedEmail].forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.id;
+                option.textContent = product.name;
+                productDropdown.appendChild(option);
+            })
+        }
+    }
+
+    document.getElementById('emailDropdown').addEventListener('change', updateProductDropdown);
+
+    function setMinTime() {
+        const startTimeInput = document.getElementById('startTime');
+        const endTimeInput = document.getElementById('endTime');
+        const now = new Date();
+        const minEndTime = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+
+        endTimeInput.min = minEndTime.toISOString().slice(0, 16);
+        startTimeInput.min = now.toISOString().slice(0, 16);
+    }
+    document.addEventListener('DOMContentLoaded', setMinTime);
+</script>
+</body>
+</html>

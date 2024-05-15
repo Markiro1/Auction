@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <link rel="stylesheet" href="/css/auction/wonAuctions.css">
+</head>
+<body>
+
+<header>
+    <h2 class="logo">Logo</h2>
+    <nav class="navigation">
+        <button class="btnLogin-popup" onclick="window.location.href='/logo/user'">Go back</button>
+    </nav>
+</header>
+
+<div class="content">
+    <div class="container">
+        <h1>Won Auctions</h1>
+        <ol class="list">
+            <li th:each="wonAuction : ${wonAuctions}">
+                <a th:href="@{/auction/user/won-auction/{wonAuctionId}(wonAuctionId=${wonAuction.wonAuctionId})}" th:text="'Auction#' + ${wonAuction.wonAuctionId}"></a>
+            </li>
+        </ol>
+    </div>
+</div>
+
+</body>
+</html>

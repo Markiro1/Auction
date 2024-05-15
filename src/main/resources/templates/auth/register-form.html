@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/auth/register.css">
+</head>
+
+<body>
+<div class="wrapper">
+    <div class="form-box register">
+        <h2>Registration</h2>
+        <form th:action="@{/users/sign-up}" method="post" id="registerForm">
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" th:field="${user.email}" required>
+                <label>Email</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="text"></ion-icon></span>
+                <input type="text" th:field="${user.firstName}" required>
+                <label>First name</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="text"></ion-icon></span>
+                <input type="text" th:field="${user.lastName}" required>
+                <label>Last name</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="key"></ion-icon></span>
+                <input type="password" th:field="${user.password}" required>
+                <label>Password</label>
+            </div>
+            <button type="submit" class="btn">Register</button>
+            <div class="login-register">
+                <p>Already have an account?
+                    <a href="/auth/login" class="login-link">Login</a>
+                    <br>
+                    <a href="/logo" class="home-link">Go back</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+<ul>
+    <li>
+        <p th:each="line : ${errorMessage.split('\n')}" th:text="${line}"></p>
+    </li>
+</ul>
+<script src="/js/register.js"></script>
+</body>
+</html>

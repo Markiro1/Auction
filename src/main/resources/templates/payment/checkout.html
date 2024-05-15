@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <link rel="Login & Registration" href="/css/payment/checkout.css">
+    <link rel="stylesheet" href="/css/payment/checkout.css">
+</head>
+
+<body>
+
+<header>
+    <h2 class="logo">Logo</h2>
+</header>
+
+<div class="wrapper">
+    <div class="form-box paymentForm">
+        <h2>Enter Payment Information</h2>
+        <form th:action="@{/payment/user/charge}" method="post" id="paymentForm">
+            <input type="hidden" id="stripedAuctionId" th:field="${stripe.auctionId}">
+            <input type="hidden" id="stripedUserId" th:field="${stripe.userId}">
+            <input type="hidden" id="amount" th:field="${stripe.amount}">
+            <input type="hidden" id="currency" th:field="${stripe.currency}">
+            <table>
+                <tr>
+                    <td>
+                        <div class="input-box">
+                            <input type="text" th:value="${priceToPaid / 100}" required>
+                            <label>Amount $</label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="stripe">
+                <script
+                        src='https://checkout.stripe.com/checkout.js'
+                        class='stripe-button'
+                        th:attr='data-key=${stripePublicKey},
+                                 data-amount=${priceToPaid}'
+                        data-currency='USD'
+                        data-locale='auto'
+                        data-zip-code='false'>
+                </script>
+            </div>
+
+            <div class="return-link">
+                <p>
+                    <br>
+                    <a  href="/auction/won-auction/{id}" th:href="@{/auction/user/won-auction/{id}(id=${auctionId})}" class="home-link">Go back</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script th:inline="javascript">
+    const authToken = getCookie('token');
+    const tokenData = parseJwt(authToken);
+    const auctionId = [[${auctionId}]];
+    const amount = [[${priceToPaid}]];
+
+    function parseJwt(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+
+            return JSON.parse(jsonPayload);
+        } catch (error) {
+            console.error("Error parsing JWT", error);
+            return null;
+        }
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    function getUserId() {
+        return tokenData.userId;
+    }
+
+    function setHiddenInputValue() {
+        const stripedUserId = document.getElementById("stripedUserId");
+        const stripedAuctionId = document.getElementById("stripedAuctionId");
+        const stripedAmount = document.getElementById("amount");
+        const currency = document.getElementById("currency");
+        stripedUserId.value = getUserId();
+        stripedAuctionId.value = auctionId;
+        stripedAmount.value = amount;
+        currency.value = 'USD';
+    }
+    window.onload = setHiddenInputValue;
+</script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+
+</html>

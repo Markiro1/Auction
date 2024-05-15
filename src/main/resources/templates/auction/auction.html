@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Website</title>
+    <link rel="stylesheet" href="/css/auction/auction.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@stomp/stompjs@7.0.0/bundles/stomp.umd.min.js"></script>
+
+</head>
+<body>
+
+<header>
+    <h2 class="logo">Logo</h2>
+    <nav class="navigation">
+        <button class="btnLogin-popup" onclick="window.location.href='/auction/user/all/active'">Go back</button>
+    </nav>
+</header>
+
+<div class="content">
+    <div class="container">
+        <p><strong>Name:</strong> <span th:text="${auction.name}"></span></p>
+        <p><strong>Quantity:</strong> <span th:text="${auction.quantity}"></span></p>
+        <p><strong>Asking price:</strong> <span th:text="${auction.askingPrice}"></span></p>
+        <p><strong>Start time:</strong> <span id="startTime" th:text="${auction.getStartTime()}"></span></p>
+        <p><strong>End time:</strong> <span id="endTime" th:text="${auction.getEndTime()}"></span></p>
+        <p><strong>Auction duration:</strong> <span id="auctionDuration"></span></p>
+        <p class="description-label"><strong>Description:</strong></p>
+        <div class="description-box">
+            <p th:text="${auction.description}"></p>
+        </div>
+    </div>
+</div>
+
+<div class="bids">
+    <div class="container">
+        <table class="table">
+            <tr>
+                <td>
+                    <p class="bids-label"><strong>Bids</strong></p>
+                    <div id="countOfBids" class="bids-box" th:text="${countOfBids}"></div>
+                </td>
+                <td>
+                    <p class="price-label"><strong>Current price</strong></p>
+                    <div id="currentPrice" class="bids-box" th:text="${currentPrice}"></div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <p class="minimum-increase"><strong>Minimum increase</strong></p>
+                    <div class="input-box"><input id="minInput" type="number" value="100" min="100" readonly></div>
+                </td>
+                <td>
+                    <p class="maximum-increase"><strong>Maximum increase</strong></p>
+                    <div class="input-box"><input id="maxInput" type="number" value="500" max="500" readonly></div>
+                </td>
+            </tr>
+            <form id="bidForm" th:object="${bid}">
+                <input type="hidden" name="customerId" th:value="${bid.customerId}">
+                <input type="hidden" name="auctionId" th:value="${auctionId}">
+                <tr>
+                    <td class="bid-input">
+                        <input id="userBidInput" type="number" th:field="${bid.sum}" required>
+                        <button id="submitBidButton" type="button" onclick="submitBid()" disabled>Place bid</button>
+                    </td>
+                </tr>
+            </form>
+        </table>
+    </div>
+</div>
+<script th:inline="javascript">
+    let serverIp = [[${serverIp}]];
+    const auction = [[${auction}]];
+    if (serverIp === null) {
+        serverIp = 'localhost';
+    }
+
+    const offset = new Date().getTimezoneOffset() / (-60);
+    let startDate = new Date(auction.startTime)
+    let endDate = new Date(auction.endTime)
+    startDate.setHours(startDate.getHours() + offset)
+    endDate.setHours(endDate.getHours() + offset)
+    const startTimeDate = document.getElementById('startTime');
+    const endTimeDate = document.getElementById('endTime');
+    startTimeDate.textContent = startDate.toLocaleString();
+    endTimeDate.textContent = endDate.toLocaleString();
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const customerId = tokenData.userId;
+        document.querySelector('input[name="customerId"]').value = customerId;
+
+        const stompClient = new StompJs.Client({
+            brokerURL: `ws://${serverIp}:8090/wss`
+        });
+        stompClient.activate();
+
+        stompClient.onConnect = (frame) => {
+            console.log('connect');
+            stompClient.subscribe('/topic/addBid', function (message) {
+                const data = JSON.parse(message.body);
+                document.getElementById("currentPrice").innerText = data.currentPrice;
+                document.getElementById("countOfBids").innerText = data.countOfBids;
+            });
+        };
+
+
+        stompClient.onWebSocketError = (error) => {
+            console.error('Error with websocket', error);
+        };
+
+        stompClient.onStompError = (frame) => {
+            console.error('Broker reported error: ' + frame.headers['message']);
+            console.error('Additional details: ' + frame.body);
+        };
+    });
+
+    function updateAuctionDuration() {
+        const now = new Date();
+        let timeDifference;
+
+        if (now < startDate) {
+            timeDifference = startDate - now;
+            document.getElementById('auctionDuration').textContent = formatTimeDifference(timeDifference) + ' until start';
+            disableBidElements();
+        } else if (now > endDate) {
+            document.getElementById('auctionDuration').textContent = 'Auction has ended';
+            disableBidElements();
+        } else {
+            timeDifference = endDate - now;
+            document.getElementById('auctionDuration').textContent = formatTimeDifference(timeDifference) + ' left';
+        }
+    }
+
+    function formatTimeDifference(duration) {
+        const days = Math.floor(duration / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((duration % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((duration % (1000 * 60)) / 1000);
+
+        return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    function disableBidElements() {
+        document.getElementById('userBidInput').disabled = true;
+        document.getElementById('submitBidButton').disabled = true;
+    }
+
+    setInterval(updateAuctionDuration, 1000);
+    updateAuctionDuration();
+
+    function submitBid() {
+        const currentUserId = getUserId();
+        if (currentUserId === auction.userId) {
+            alert("You are not allowed to place a bid.");
+            return;
+        }
+        const formData = new FormData(document.getElementById("bidForm"));
+        fetch("/bids/user/add", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Failed to add bid");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+            });
+    }
+</script>
+
+<script src="/js/auction.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+version: '3.9'
+
+volumes:
+  pg_auction:
+
+services:
+  auction_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: auction_db
+
+    volumes:
+      - pg_auction:/var/lib/postgresql/data
+
+    ports:
+    - "5433:5432"
+
+  app:
+    image: markiro1/auction-app:latest
+    restart: always
+    ports:
+      - "8090:8090"
+    depends_on:
+      - auction_db
+    environment:
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://auction_db:5432/auction_db'
+      JAVA_OPTS: '-Xmx512m'
+      SERVER_IP: $HOST_IP
+      IP_ADDRESS: ""
